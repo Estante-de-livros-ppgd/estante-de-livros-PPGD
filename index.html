@@ -179,6 +179,45 @@ a.btn { display: inline-flex; align-items: center; }
 a.btn.main { color: #FFFFFF; }
 .track { justify-content: center; }
 .vazia { padding: 8px 24px 26px; color: var(--muted); }
+
+/* Destaque da revista Argumenta */
+.revista { --vermelho: #A61E23; margin-top: -26px; padding-bottom: 56px; }
+.revista-card { display: grid; grid-template-columns: 262px minmax(0, 1fr); overflow: hidden; border-radius: 22px; border-bottom: 7px solid var(--navy); background: var(--vermelho); color: #FFFFFF; box-shadow: var(--shadow); }
+.revista-capa { display: grid; place-items: center; padding: 32px 36px; background: var(--navy); }
+.revista-capa { perspective: 800px; }
+/* Revista em 3D: a capa na frente, o miolo de páginas à direita e a contracapa atrás */
+.livro3d { --esp: 24px; position: relative; display: block; width: 180px; transform-style: preserve-3d; transform: rotateY(-13deg) rotateX(2deg); }
+/* Giro: começa de lado e vira até mostrar a capa quando a seção aparece na tela */
+.livro3d.de-lado { transform: rotateY(-64deg) rotateX(3deg); }
+.livro3d.girando { transition: transform 1.8s cubic-bezier(.22, .7, .2, 1); }
+.livro3d .cover { border-radius: 1px 3px 3px 1px; box-shadow: none; transform: translateZ(calc(var(--esp) / 2)); }
+.livro3d .cover::after { background: linear-gradient(90deg, rgba(0, 0, 0, .32), rgba(255, 255, 255, .16) 3%, rgba(0, 0, 0, .08) 6%, transparent 10%), linear-gradient(115deg, rgba(255, 255, 255, .2), transparent 42%); }
+.livro3d::before { content: ""; position: absolute; top: 2px; bottom: 2px; right: calc(var(--esp) / -2); width: var(--esp); background: repeating-linear-gradient(90deg, #F4F1E8 0 1px, #CFCABB 1px 2px); transform: rotateY(90deg); }
+.livro3d::after { content: ""; position: absolute; inset: 0; border-radius: 1px 3px 3px 1px; background: #5F1215; box-shadow: 14px 20px 26px rgba(0, 0, 0, .55); transform: translateZ(calc(var(--esp) / -2)); }
+.revista-info { align-self: center; padding: 32px 36px; }
+.revista-sobre { display: block; font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #F6E7A8; }
+.revista h2 { margin-top: 6px; font-size: clamp(27px, 4vw, 36px); font-weight: 900; line-height: 1.08; letter-spacing: -.015em; }
+.revista-texto { margin-top: 12px; max-width: 66ch; }
+.selos { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.selo { flex: 1 1 auto; padding: 3px 11px; border-radius: 20px; background: rgba(255, 255, 255, .14); font-size: 13px; font-weight: 700; text-align: center; white-space: nowrap; }
+.selo.qualis { background: var(--gold); color: var(--navy); }
+@media (min-width: 480px) { .selos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .selos { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.revista .cta a.btn { border-color: #FFFFFF; background: transparent; color: #FFFFFF; }
+.revista .cta a.btn:hover { background: rgba(255, 255, 255, .14); }
+.revista .cta a.btn.main { border-color: var(--gold); background: var(--gold); color: var(--navy); }
+.revista .cta a.btn.main:hover { border-color: #F6E7A8; background: #F6E7A8; }
+@media (max-width: 760px) {
+  .revista-card { grid-template-columns: minmax(0, 1fr); }
+  .revista-capa { padding: 24px 20px; }
+  .revista-info { padding: 24px 20px; }
+}
+@media (max-width: 640px) {
+  .selos { gap: 5px; }
+  .selo { padding: 3px 8px; font-size: clamp(10.5px, 3.3vw, 12px); }
+  .livro3d { --esp: 20px; width: 150px; }
+  .revista .cta a.btn { justify-content: center; width: 100%; }
+}
 </style>
 </head>
 <body>
@@ -221,6 +260,32 @@ a.btn.main { color: #FFFFFF; }
 </div>
 
 <main class="wrap" id="shelves"></main>
+
+<section class="revista" aria-labelledby="revista-title">
+  <div class="wrap">
+    <div class="revista-card">
+      <div class="revista-capa">
+        <span class="livro3d"><span class="cover"><img src="capas/argumenta.jpg" alt="Capa da revista Argumenta Journal Law" width="185" height="263"></span></span>
+      </div>
+      <div class="revista-info">
+        <span class="revista-sobre">Revista do PPGD</span>
+        <h2 id="revista-title">Argumenta Journal Law</h2>
+        <p class="revista-texto">Pesquisas sobre jurisdição, direitos fundamentais, teorias constitucionais e vulnerabilidades, publicadas pela UENP. A leitura é gratuita, e a revista não cobra taxas de submissão nem de avaliação.</p>
+        <div class="selos">
+          <span class="selo qualis">Qualis A2 (2021-2024)</span>
+          <span class="selo">Acesso aberto</span>
+          <span class="selo">Três edições por ano</span>
+          <span class="selo">E-ISSN 2317-3882</span>
+        </div>
+        <div class="cta">
+          <a class="btn main" href="https://seer.uenp.edu.br/index.php/argumenta/issue/view/113" target="_blank" rel="noopener">Ler a edição mais recente</a>
+          <a class="btn" href="https://seer.uenp.edu.br/index.php/argumenta" target="_blank" rel="noopener">Conhecer a revista</a>
+          <a class="btn" href="https://seer.uenp.edu.br/index.php/argumenta/about/submissions" target="_blank" rel="noopener">Enviar artigo</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer><div class="wrap">Produção científica do PPGD UENP · @ppgd.uenp</div></footer>
 
@@ -466,6 +531,18 @@ $("tally").innerHTML = `<span><b>${BOOKS.length}</b> ${plural(BOOKS.length, "liv
 
 render();
 fromHash();
+
+/* Gira a revista uma vez, quando a seção aparece. Sem esse recurso, ela já fica na posição final */
+const livro = document.querySelector(".livro3d");
+if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  livro.classList.add("de-lado");
+  new IntersectionObserver((itens, obs) => {
+    if (!itens[0].isIntersecting) return;
+    obs.disconnect();
+    livro.classList.add("girando");
+    livro.classList.remove("de-lado");
+  }, { threshold: .6 }).observe(document.querySelector(".revista-capa"));
+}
 </script>
 </body>
 </html>
