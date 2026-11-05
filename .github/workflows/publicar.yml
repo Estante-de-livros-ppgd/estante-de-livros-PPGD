@@ -1,0 +1,70 @@
+name: Atualizar e publicar a estante
+
+on:
+  schedule:
+    - cron: "0 9 * * *"  # todo dia, às 6h no horário de Brasília
+  workflow_dispatch:
+    inputs:
+      forcar:
+        description: "Aceitar uma queda grande no número de livros"
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Ler a planilha
+        env:
+          FORCAR: ${{ inputs.forcar && '--forcar' || '' }}
+        run: |
+          if grep -q '"csv_url": ""' scripts/fonte.json; then
+            echo "Planilha ainda não configurada. Publicando os dados atuais."
+          else
+            python scripts/atualizar_dados.py $FORCAR
+          fi
+
+      - name: Guardar as alterações
+        run: |
+          git add dados capas
+          if ! git diff --cached --quiet; then
+            git config user.name "estante-ppgd"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Atualiza os livros a partir da planilha"
+            git push
+          fi
+
+      - name: Montar o site
+        run: |
+          mkdir _site
+          cp index.html _site/
+          cp -r dados capas _site/
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

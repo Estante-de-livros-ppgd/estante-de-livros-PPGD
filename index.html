@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Estante de Livros do PPGD</title>
+<meta name="description" content="A produção científica do PPGD UENP reunida em um só lugar, com links para leitura gratuita ou compra.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 240'%3E%3Cpath fill='%23263578' d='M140 196 30 176q-8-1-8-10V22q0-12 12-10l106 22zM160 196l110-20q8-1 8-10V22q0-12-12-10L160 34z'/%3E%3Crect fill='%23D9BE50' x='34' y='206' width='232' height='22' rx='11'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap">
+<style>
+/* Layout: a mesma disposição do protótipo, na identidade dos vídeos da Estante de Livros:
+   papel claro pontilhado, cartões brancos, azul e navy, âmbar só como acento, Montserrat.
+   Tema único de propósito, porque a identidade da série é clara. */
+:root {
+  --paper: #F5F5FA; --card: #FFFFFF; --navy: #0F1C40; --blue: #263578; --amber: #F6A806; --gold: #D9BE50;
+  --muted: #5A6385; --line: #D5D9E8; --blue-soft: #E6E9F5; --amber-soft: #FDEFC8;
+  --font: "Montserrat", "Segoe UI", system-ui, sans-serif;
+  --shadow: 0 9px 22px rgba(15, 28, 64, .10);
+  --u: 176px;
+  --stage: calc(var(--u) * 1.6);
+  --pad: 12px;
+  color-scheme: light;
+}
+@media (max-width: 640px) { :root { --u: 132px; } }
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+body {
+  color: var(--navy); font: 500 16px/1.55 var(--font);
+  background: var(--paper) radial-gradient(circle, rgba(38, 53, 120, .13) 1.1px, transparent 1.3px) 0 0 / 22px 22px;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+h1, h2, h3, p { margin: 0; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+
+.wrap {
+  max-width: 1120px; margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+
+/* Abertura: vinheta da série */
+.hero { position: relative; overflow: hidden; }
+.hero::before, .hero::after { content: ""; position: absolute; border-radius: 50%; pointer-events: none; }
+.hero::before { right: -120px; top: -160px; width: 520px; height: 520px; background: radial-gradient(circle, rgba(246, 168, 6, .24) 0%, rgba(246, 168, 6, 0) 70%); }
+.hero::after { left: -180px; bottom: -220px; width: 520px; height: 520px; background: radial-gradient(circle, rgba(38, 53, 120, .12) 0%, rgba(38, 53, 120, 0) 70%); }
+.hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 470px); gap: 40px; align-items: center; padding-block: 44px; }
+.mark { display: block; width: 76px; height: 61px; margin-bottom: 14px; }
+.mark .page { fill: var(--blue); }
+.mark .base { fill: var(--gold); }
+.hero h1 { display: grid; justify-items: start; font-weight: 900; }
+.w-estante { font-size: clamp(44px, 6.8vw, 88px); line-height: 1; letter-spacing: .09em; color: var(--navy); }
+.w-de { margin-top: 6px; font-size: clamp(15px, 2.2vw, 27px); line-height: 1.1; font-weight: 800; letter-spacing: .34em; color: var(--blue); }
+.w-rule { width: clamp(180px, 26vw, 320px); height: 4px; margin-block: 8px; background: var(--blue); }
+.w-ppgd { font-size: clamp(30px, 4.4vw, 56px); line-height: 1; letter-spacing: .4em; color: var(--amber); }
+.lede { margin-top: 20px; max-width: 46ch; font-size: 17px; color: var(--muted); }
+.tally { display: flex; flex-wrap: wrap; gap: 8px 30px; margin-top: 22px; font-size: 13.5px; font-weight: 700; color: var(--blue); }
+.tally b { display: block; font-size: 40px; font-weight: 900; line-height: 1; letter-spacing: -.02em; color: var(--amber); }
+
+
+/* Filtros */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); border-block: 1px solid var(--line); }
+.bar .wrap { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; padding-block: 12px; }
+.search { flex: 1 1 240px; min-width: 0; }
+.search input, .type select { width: 100%; height: 42px; padding-inline: 18px; border: 2px solid var(--line); border-radius: 40px; background: var(--card); font-weight: 600; font-size: 14.5px; }
+.search input::placeholder { color: var(--muted); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { height: 42px; padding-inline: 16px; border: 2px solid var(--blue); border-radius: 40px; background: var(--card); color: var(--blue); font-size: 14px; font-weight: 700; }
+.chip:hover { background: var(--blue-soft); }
+.chip[aria-pressed="true"] { background: var(--blue); color: #FFFFFF; }
+.type { flex: 0 1 210px; min-width: 0; }
+.count { width: 100%; font-size: 13px; font-weight: 600; color: var(--muted); }
+
+/* Estante: um cartão branco por linha de pesquisa */
+main.wrap { padding-block: 32px 56px; display: grid; gap: 30px; }
+.shelf { min-width: 0; overflow: hidden; background: var(--card); border-radius: 22px; border-bottom: 7px solid var(--amber); box-shadow: var(--shadow); }
+.plaque { display: flex; flex-wrap: wrap; gap: 2px 16px; align-items: flex-start; padding: 20px 24px 8px; }
+.plaque h2 { font-size: 21px; font-weight: 800; line-height: 1.2; letter-spacing: -.01em; text-wrap: balance; }
+.plaque h2::after { content: ""; display: block; width: 64px; height: 4px; margin-top: 8px; border-radius: 2px; background: var(--amber); }
+.plaque span { margin-left: auto; padding-top: 4px; font-size: 12.5px; font-weight: 600; color: var(--muted); }
+.scroller { overflow-x: auto; scrollbar-width: thin; }
+.track { position: relative; display: flex; gap: 26px; width: max-content; min-width: 100%; padding: var(--pad) 24px 0; }
+.track::after { content: ""; position: absolute; left: 0; right: 0; top: calc(var(--stage) + var(--pad)); height: 10px; background: linear-gradient(180deg, var(--blue), var(--navy)); box-shadow: 0 3px 5px rgba(15, 28, 64, .22); }
+.book { position: relative; z-index: 1; flex: none; width: calc(var(--u) * 1.04); }
+.pull { display: flex; align-items: flex-end; width: 100%; height: var(--stage); padding: 0; border: 0; background: none; }
+.pull .cover { transition: transform .2s ease, box-shadow .2s ease; }
+.pull:hover .cover, .pull:focus-visible .cover { transform: translateY(-10px); box-shadow: 8px 18px 22px rgba(15, 28, 64, .32); }
+.tag { padding-top: 22px; padding-bottom: 16px; font-size: 13.5px; line-height: 1.35; }
+.tag .who { min-height: 2.7em; font-weight: 600; }
+.pills { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.pill { padding: 2px 9px; border-radius: 20px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.pill.free { background: var(--blue); color: #FFFFFF; }
+.pill.sale { background: var(--amber); color: var(--navy); }
+.pill.out { background: var(--blue-soft); color: var(--muted); }
+.pill.vid { background: transparent; color: var(--blue); padding-inline: 0 2px; }
+
+.empty { padding: 56px 16px; text-align: center; }
+.empty h2 { font-size: 26px; font-weight: 900; }
+.empty p { margin-top: 6px; color: var(--muted); }
+.empty button { margin-top: 16px; }
+
+/* Capas */
+.cover { position: relative; display: block; width: 100%; overflow: hidden; border-radius: 2px 4px 4px 2px; box-shadow: 4px 7px 12px rgba(15, 28, 64, .28); }
+.cover img { display: block; width: 100%; height: auto; }
+.cover::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(0, 0, 0, .18), rgba(255, 255, 255, .08) 3%, transparent 7%); }
+
+/* Ficha */
+dialog { width: min(880px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 0; border-radius: 22px; background: var(--card); color: var(--navy); overflow: auto; }
+dialog::backdrop { background: rgba(15, 28, 64, .66); }
+.close { position: sticky; top: 8px; float: right; z-index: 2; width: 42px; height: 42px; margin: 8px 8px -50px 0; border: 0; border-radius: 50%; background: var(--blue-soft); color: var(--blue); font-size: 24px; line-height: 1; }
+.close:hover { background: var(--line); }
+.sheet { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 32px; padding: 32px; }
+.sheet .side { display: grid; gap: 16px; align-content: start; min-width: 0; }
+.sheet .cover { width: 100%; }
+.sheet h2 { margin-top: 6px; font-size: clamp(27px, 4vw, 36px); font-weight: 900; line-height: 1.08; letter-spacing: -.015em; text-wrap: balance; }
+.subtitle { margin-top: 6px; font-size: 18px; font-weight: 700; line-height: 1.25; color: var(--blue); }
+.people { margin-top: 12px; font-weight: 700; }
+.people::after { content: ""; display: block; width: 64px; height: 4px; margin-top: 10px; border-radius: 2px; background: var(--amber); }
+.synopsis { margin-top: 14px; max-width: 62ch; }
+.pills.big { margin-top: 14px; }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.btn { min-height: 44px; padding: 8px 20px; border: 2px solid var(--blue); border-radius: 40px; background: var(--card); color: var(--blue); font-weight: 800; font-size: 15px; }
+.btn:hover { background: var(--blue-soft); }
+.btn.main { background: var(--blue); color: #FFFFFF; }
+.btn.main:hover { background: var(--navy); border-color: var(--navy); }
+.facts { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 12px; margin: 0; font-size: 13px; }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.block { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); }
+.block h3 { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); }
+.ref { margin-top: 8px; font-size: 15px; }
+.mini { margin-top: 10px; padding: 6px 16px; border: 2px solid var(--line); border-radius: 40px; background: var(--card); font-size: 13.5px; font-weight: 700; }
+.mini:hover { border-color: var(--blue); }
+.reel { display: flex; gap: 14px; align-items: center; width: 100%; margin-top: 10px; padding: 12px 16px; border: 0; border-left: 7px solid var(--blue); border-radius: 16px; background: var(--card); box-shadow: var(--shadow); text-align: left; }
+.reel:hover { background: var(--blue-soft); }
+.reel i { flex: none; display: grid; place-items: center; width: 44px; aspect-ratio: 9 / 16; background: var(--paper); color: var(--amber); border-radius: 6px; }
+.reel svg { width: 22px; height: 22px; fill: currentColor; }
+.reel b { display: block; font-weight: 800; }
+.reel small { color: var(--muted); font-size: 13px; }
+
+footer { border-top: 1px solid var(--line); background: var(--paper); }
+footer .wrap { padding-block: 20px; font-size: 14px; color: var(--muted); }
+
+@media (max-width: 980px) {
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-block: 32px; }
+}
+@media (max-width: 640px) {
+  .bar { position: static; }
+  .w-estante { font-size: 13vw; }
+  .w-de { font-size: 4.2vw; }
+  .w-ppgd { font-size: 8.6vw; }
+  .w-rule { width: 62vw; }
+  .type { flex: 1 1 100%; }
+  .chip { padding-inline: 12px; font-size: 13.5px; }
+  .plaque { padding: 16px 16px 6px; }
+  .plaque span { margin-left: 0; width: 100%; }
+  .track { gap: 18px; padding-inline: 16px; }
+  .sheet { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 20px; }
+  .sheet .side { grid-template-columns: 120px minmax(0, 1fr); align-items: start; padding-right: 30px; }
+  .facts { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .facts dd { margin-bottom: 5px; overflow-wrap: break-word; }
+  dialog { width: calc(100vw - 16px); max-height: calc(100dvh - 16px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pull .cover { transition: none; }
+  .pull:hover .cover, .pull:focus-visible .cover { transform: none; }
+}
+
+a.btn, a.reel { color: var(--blue); text-decoration: none; }
+a.btn { display: inline-flex; align-items: center; }
+a.btn.main { color: #FFFFFF; }
+.track { justify-content: center; }
+.vazia { padding: 8px 24px 26px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <svg class="mark" viewBox="0 0 300 240" aria-hidden="true">
+        <path class="page" d="M140 196 L30 176 Q22 175 22 166 L22 22 Q22 10 34 12 L140 34 Z"/>
+        <path class="page" d="M160 196 L270 176 Q278 175 278 166 L278 22 Q278 10 266 12 L160 34 Z"/>
+        <rect class="base" x="34" y="206" width="232" height="22" rx="11"/>
+      </svg>
+      <h1 aria-label="Estante de Livros do PPGD">
+        <span class="w-estante">ESTANTE</span>
+        <span class="w-de">DE LIVROS DO</span>
+        <span class="w-rule"></span>
+        <span class="w-ppgd">PPGD</span>
+      </h1>
+    </div>
+    <div>
+      <p class="lede">A produção científica do PPGD UENP reunida em um só lugar. Leia de graça quando houver versão aberta, ou siga para a compra.</p>
+      <p class="tally" id="tally"></p>
+    </div>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="wrap">
+    <div class="search">
+      <label class="sr" for="q">Buscar por título, autor ou tema</label>
+      <input id="q" type="search" placeholder="Buscar por título, autor ou tema" autocomplete="off">
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Filtrar por forma de acesso"></div>
+    <div class="type" id="type-box">
+      <label class="sr" for="tipo">Tipo de obra</label>
+      <select id="tipo"></select>
+    </div>
+    <p class="count" id="count" role="status"></p>
+  </div>
+</div>
+
+<main class="wrap" id="shelves"></main>
+
+<footer><div class="wrap">Produção científica do PPGD UENP · @ppgd.uenp</div></footer>
+
+<dialog id="ficha" aria-labelledby="ficha-title">
+  <button class="close" id="close" type="button" aria-label="Fechar ficha">×</button>
+  <div id="ficha-body"></div>
+</dialog>
+
+<script type="module">
+/* Os livros vêm de dados/livros.json, gerado a partir da planilha */
+const esc = v => String(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const url = v => /^https?:\/\//.test(v || "") ? esc(v) : "";
+
+function limpar(b) {
+  return {
+    ...b,
+    slug: esc(b.slug), title: esc(b.title), sub: esc(b.sub || ""), year: esc(b.year), city: esc(b.city), pub: esc(b.pub),
+    pages: esc(b.pages || ""), isbn: esc(b.isbn || ""), text: esc(b.text), cover: esc(b.cover),
+    authors: b.authors.map(p => ({ first: esc(p.first), last: esc(p.last) })),
+    read: url(b.read), buy: url(b.buy), video: url(b.video), lattes: (b.lattes || []).map(url).filter(Boolean)
+  };
+}
+
+let BOOKS = [];
+let loadFailed = false;
+try {
+  const resposta = await fetch("dados/livros.json", { cache: "no-cache" });
+  if (!resposta.ok) throw new Error(resposta.status);
+  BOOKS = (await resposta.json()).map(limpar);
+} catch (erro) {
+  loadFailed = true;
+}
+
+const SHELVES = [
+  { id: "todos", name: "Todos os livros", test: () => true },
+  { id: "professores", name: "Professores", test: b => b.shelf === "professores" },
+  { id: "alunos", name: "Alunos e egressos", test: b => b.shelf === "alunos" }
+];
+const TYPES = { autoral: "Obra autoral", coletanea: "Coletânea", tese: "Dissertação ou tese" };
+const $ = id => document.getElementById(id);
+const norm = s => s.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
+const fullName = p => `${p.first} ${p.last}`;
+const authorLine = b => b.authors.map(fullName).join(" e ") + (b.org ? " (org.)" : "");
+const isOpen = b => Boolean(b.read);
+const isBuy = b => Boolean(b.buy);
+const isOut = b => !b.read && !b.buy;
+
+const coverHTML = b => `<span class="cover"><img src="${b.cover}" alt="Capa de ${b.title}"></span>`;
+
+function pillsHTML(b, withVideo) {
+  const pills = [];
+  if (isOpen(b)) pills.push(`<span class="pill free">Gratuito</span>`);
+  if (isBuy(b)) pills.push(`<span class="pill sale">${isOpen(b) ? "Impresso à venda" : "À venda"}</span>`);
+  if (isOut(b)) pills.push(`<span class="pill out">Esgotado</span>`);
+  if (withVideo && b.video) pills.push(`<span class="pill vid">▶ Vídeo</span>`);
+  return pills.join("");
+}
+
+function citation(b) {
+  const names = b.authors.map(p => `${p.last.toUpperCase()}, ${p.first}`).join("; ") + (b.org ? " (org.)" : "");
+  const sub = b.sub ? `: ${b.sub}` : "";
+  const pub = b.pub.replace(/^Editora /, "");
+  return {
+    html: `${names}. <strong>${b.title}</strong>${sub}. ${b.city}: ${pub}, ${b.year}.`,
+    text: `${names}. ${b.title}${sub}. ${b.city}: ${pub}, ${b.year}.`
+  };
+}
+
+const link = (href, label, cls) => `<a class="btn ${cls}" href="${href}" target="_blank" rel="noopener">${label}</a>`;
+
+function ctaHTML(b) {
+  const out = [];
+  if (b.read) out.push(link(b.read, "Ler agora", "main"));
+  if (b.buy) out.push(link(b.buy, b.read ? "Comprar o impresso" : "Comprar", b.read ? "" : "main"));
+  b.lattes.forEach((url, i) => {
+    const who = b.authors.length > 1 ? `: ${fullName(b.authors[i])}` : "";
+    out.push(link(url, `Currículo Lattes${who}`, ""));
+  });
+  return out.join("");
+}
+
+/* Estado dos filtros: só aparecem opções que têm livros */
+const FILTERS = [
+  { id: "all", label: "Todos", test: () => true },
+  { id: "free", label: "Ler grátis", test: isOpen },
+  { id: "buy", label: "Comprar", test: isBuy },
+  { id: "out", label: "Esgotados", test: isOut }
+].filter(f => f.id === "all" || BOOKS.some(f.test));
+const state = { filter: "all", q: "", type: "" };
+
+$("chips").innerHTML = FILTERS.map(f => `<button class="chip" type="button" data-filter="${f.id}" aria-pressed="${f.id === state.filter}">${f.label}</button>`).join("");
+
+const usedTypes = Object.keys(TYPES).filter(t => BOOKS.some(b => b.type === t));
+$("tipo").innerHTML = `<option value="">Todos os tipos</option>` + usedTypes.map(t => `<option value="${t}">${TYPES[t]}</option>`).join("");
+$("type-box").hidden = usedTypes.length < 2;
+
+function render() {
+  const q = norm(state.q.trim());
+  const test = FILTERS.find(f => f.id === state.filter).test;
+  const match = b => test(b)
+    && (!state.type || b.type === state.type)
+    && (!q || norm([b.title, b.sub, authorLine(b), b.text, b.pub].join(" ")).includes(q));
+  const found = BOOKS.filter(match);
+
+  $("count").textContent = found.length === 1 ? "1 livro nesta estante" : `${found.length} livros nesta estante`;
+
+  if (loadFailed) {
+    $("count").textContent = "";
+    $("shelves").innerHTML = `<div class="empty"><h2>Não foi possível carregar os livros</h2><p>Recarregue a página em alguns instantes.</p></div>`;
+    return;
+  }
+
+  if (!found.length) {
+    $("shelves").innerHTML = `<div class="empty"><h2>Nenhum livro encontrado</h2><p>Tente outro termo ou limpe os filtros para ver a estante inteira.</p><button class="btn" type="button" id="reset">Limpar filtros</button></div>`;
+    return;
+  }
+
+  const filtering = Boolean(q || state.type || state.filter !== "all");
+  $("shelves").innerHTML = SHELVES.map(s => shelfHTML(s, found.filter(s.test), filtering)).join("");
+}
+
+const bookHTML = b => `<article class="book">
+  <button class="pull" type="button" data-book="${b.slug}" aria-label="Abrir a ficha de ${b.title}">${coverHTML(b)}</button>
+  <div class="tag"><div class="who">${authorLine(b)}, ${b.year}</div><div class="pills">${pillsHTML(b, true)}</div></div>
+</article>`;
+
+function shelfHTML(s, books, filtering) {
+  if (!books.length && filtering) return "";
+  const count = books.length === 1 ? "1 livro" : `${books.length} livros`;
+  const body = books.length
+    ? `<div class="scroller"><div class="track">${books.map(bookHTML).join("")}</div></div>`
+    : `<p class="vazia">Os livros desta prateleira aparecerão aqui em breve.</p>`;
+  return `<section class="shelf" aria-labelledby="s-${s.id}">
+    <div class="plaque"><h2 id="s-${s.id}">${s.name}</h2>${books.length ? `<span>${count}</span>` : ""}</div>
+    ${body}
+  </section>`;
+}
+
+function fichaHTML(b) {
+  const cit = citation(b);
+  return `<div class="sheet">
+    <div class="side">
+      ${coverHTML(b)}
+      <dl class="facts">
+        <dt>Ano</dt><dd>${b.year}</dd>
+        <dt>Editora</dt><dd>${b.pub}</dd>
+        ${b.pages ? `<dt>Páginas</dt><dd>${b.pages}</dd>` : ""}
+        ${b.isbn ? `<dt>ISBN</dt><dd>${b.isbn}</dd>` : ""}
+      </dl>
+    </div>
+    <div>
+      <h2 id="ficha-title">${b.title}</h2>
+      ${b.sub ? `<p class="subtitle">${b.sub}</p>` : ""}
+      <p class="people">${authorLine(b)}</p>
+      <div class="pills big">${pillsHTML(b, false)}</div>
+      <p class="synopsis">${b.text}</p>
+      <div class="cta">${ctaHTML(b)}</div>
+      ${b.video ? `<div class="block"><h3>Estante de Livros</h3>
+        <a class="reel" href="${b.video}" target="_blank" rel="noopener"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></i>
+        <span><b>${fullName(b.authors[0])} fala sobre o livro</b><small>Episódio do quadro no Instagram</small></span></a></div>` : ""}
+      <div class="block"><h3>Como citar (ABNT)</h3>
+        <p class="ref" id="ref">${cit.html}</p>
+        <button class="mini" type="button" id="copy" data-text="${cit.text.replace(/"/g, "&quot;")}">Copiar referência</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+const dlg = $("ficha");
+
+function openBook(slug) {
+  const b = BOOKS.find(x => x.slug === slug);
+  if (!b || (dlg.open && dlg.dataset.slug === slug)) return;
+  dlg.dataset.slug = slug;
+  $("ficha-body").innerHTML = fichaHTML(b);
+  if (!dlg.open) dlg.showModal();
+  dlg.scrollTop = 0;
+}
+
+function clearHash() {
+  if (!location.hash) return;
+  try { history.replaceState(null, "", location.pathname + location.search); }
+  catch (e) { location.hash = ""; }
+}
+
+function fromHash() {
+  const slug = location.hash.slice(1);
+  if (BOOKS.some(b => b.slug === slug)) openBook(slug);
+  else if (dlg.open) dlg.close();
+}
+
+/* Eventos */
+document.addEventListener("click", e => {
+  const book = e.target.closest("[data-book]");
+  if (book) {
+    const slug = book.dataset.book;
+    openBook(slug);
+    location.hash = slug;
+    return;
+  }
+  const chip = e.target.closest("[data-filter]");
+  if (chip) {
+    state.filter = chip.dataset.filter;
+    document.querySelectorAll("[data-filter]").forEach(c => c.setAttribute("aria-pressed", c === chip));
+    render();
+    return;
+  }
+  if (e.target.closest("#reset")) {
+    state.filter = "all"; state.q = ""; state.type = "";
+    $("q").value = ""; $("tipo").value = "";
+    document.querySelectorAll("[data-filter]").forEach(c => c.setAttribute("aria-pressed", c.dataset.filter === "all"));
+    render();
+    return;
+  }
+  const copy = e.target.closest("#copy");
+  if (copy) {
+    const done = () => { copy.textContent = "Referência copiada"; };
+    const fallback = () => {
+      const r = document.createRange();
+      r.selectNodeContents($("ref"));
+      const sel = getSelection();
+      sel.removeAllRanges();
+      sel.addRange(r);
+      copy.textContent = "Texto selecionado: use Ctrl+C";
+    };
+    if (navigator.clipboard) navigator.clipboard.writeText(copy.dataset.text).then(done, fallback);
+    else fallback();
+  }
+});
+
+$("q").addEventListener("input", e => { state.q = e.target.value; render(); });
+$("tipo").addEventListener("change", e => { state.type = e.target.value; render(); });
+$("close").addEventListener("click", () => dlg.close());
+dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+dlg.addEventListener("close", clearHash);
+window.addEventListener("hashchange", fromHash);
+
+/* Abertura */
+const openCount = BOOKS.filter(isOpen).length;
+const buyCount = BOOKS.filter(isBuy).length;
+const plural = (n, one, many) => n === 1 ? one : many;
+$("tally").innerHTML = `<span><b>${BOOKS.length}</b> ${plural(BOOKS.length, "livro", "livros")}</span><span><b>${openCount}</b> para ler de graça</span><span><b>${buyCount}</b> à venda</span>`;
+
+render();
+fromHash();
+</script>
+</body>
+</html>
