@@ -104,5 +104,255 @@
       "http://lattes.cnpq.br/5504051216111338"
     ],
     "text": "Fruto de dissertação de mestrado, o livro analisa ações diretas de inconstitucionalidade sobre dispositivos de constituições estaduais para mostrar como o Supremo Tribunal Federal aplica o princípio da simetria. A autora parte das origens do federalismo e discute se a simetria preserva o pacto federativo ou reduz a autonomia dos estados, em temas como poder constituinte derivado e emendas parlamentares impositivas."
+  },
+  {
+    "slug": "orfaos-do-feminicidio",
+    "title": "Órfãos do feminicídio",
+    "sub": "vitimização integral, dignidade humana e proteção de crianças e adolescentes",
+    "authors": [
+      {
+        "first": "Silvia de Jesus",
+        "last": "Martins"
+      }
+    ],
+    "org": false,
+    "year": "2026",
+    "city": "Curitiba",
+    "pub": "Juruá Editora",
+    "pages": "186",
+    "isbn": "978-65-263-2604-6",
+    "type": "autoral",
+    "shelf": "alunos",
+    "cover": "capas/orfaos-do-feminicidio.jpg",
+    "read": "",
+    "buy": "https://www.jurua.com.br/shop_item.asp?id=32393",
+    "video": "",
+    "lattes": [],
+    "text": "O livro examina as consequências do feminicídio para filhas e filhos das vítimas, a partir da vitimologia e da doutrina da proteção integral. A pesquisa empírica analisa 65 processos do Tribunal do Júri de Curitiba."
+  },
+  {
+    "slug": "etica-cidadania-e-acesso-a-justica",
+    "title": "Ética, cidadania e acesso à justiça",
+    "sub": "homenagem ao Ministro Sérgio Luiz Kukina",
+    "authors": [
+      {
+        "first": "José Laurindo de",
+        "last": "Souza Netto"
+      }
+    ],
+    "org": true,
+    "year": "2026",
+    "city": "Curitiba",
+    "pub": "Juruá Editora",
+    "pages": "328",
+    "isbn": "978-65-263-1946-8",
+    "type": "coletanea",
+    "shelf": "alunos",
+    "cover": "capas/etica-cidadania-e-acesso-a-justica.jpg",
+    "read": "",
+    "buy": "https://www.jurua.com.br/shop_item.asp?id=32034",
+    "video": "",
+    "lattes": [],
+    "text": "Coletânea em homenagem ao Ministro Sérgio Luiz Kukina, com textos de dezenas de colaboradores. Os capítulos tratam de temas como prescrição, autocomposição, mediação, meio ambiente e proteção de órfãos do feminicídio."
+  },
+  {
+    "slug": "ordem-dos-advogados-do-brasil",
+    "title": "Ordem dos Advogados do Brasil",
+    "sub": "a trajetória de sua natureza jurídica única",
+    "authors": [
+      {
+        "first": "Vinny",
+        "last": "Pellegrino"
+      }
+    ],
+    "org": false,
+    "year": "2025",
+    "city": "Rio de Janeiro",
+    "pub": "Lumen Juris",
+    "pages": "252",
+    "isbn": "978-85-519-3720-4",
+    "type": "tese",
+    "shelf": "alunos",
+    "cover": "capas/ordem-dos-advogados-do-brasil.jpg",
+    "read": "",
+    "buy": "https://lumenjuris.com.br/direito-constitucional/ordem-dos-advogados-do-brasil-2026-4888/p",
+    "video": "",
+    "lattes": [],
+    "text": "O autor acompanha as transformações institucionais da OAB desde a Constituição de 1988 para explicar como se formou sua natureza jurídica própria. A análise usa os neoinstitucionalismos e o método de process tracing."
+  },
+  {
+    "slug": "dialogo-restaurativo",
+    "title": "Diálogo restaurativo",
+    "sub": "bases teóricas e apoio normativo à participação comunitária",
+    "authors": [
+      {
+        "first": "André Del Grossi",
+        "last": "Assumpção"
+      }
+    ],
+    "org": false,
+    "year": "2025",
+    "city": "São Paulo",
+    "pub": "Tirant lo Blanch",
+    "pages": "142",
+    "isbn": "978-85-9477-543-6",
+    "type": "autoral",
+    "shelf": "alunos",
+    "cover": "capas/dialogo-restaurativo.jpg",
+    "read": "",
+    "buy": "https://editorial.tirant.com/br/libro/dialogo-restaurativo-bases-teoricas-e-apoio-normativo-a-participacao-comunitaria-andre-del-grossi-assumpcao-9788594775436",
+    "video": "",
+    "lattes": [],
+    "text": "O livro discute as bases teóricas e o apoio normativo para a participação da comunidade em práticas restaurativas. O debate parte de uma crítica ao pensamento punitivista e à racionalidade penal moderna."
+  },
+  {
+    "slug": "acesso-a-justica-criminal",
+    "title": "Acesso à justiça criminal",
+    "sub": "NECRIM's: núcleos especiais criminais como alternativa consensual, restaurativa e dialógica na persecução criminal",
+    "authors": [
+      {
+        "first": "Everson Aparecido",
+        "last": "Contelli"
+      }
+    ],
+    "org": false,
+    "year": "2025",
+    "city": "Rio de Janeiro",
+    "pub": "Lumen Juris",
+    "pages": "236",
+    "isbn": "978-85-519-2952-0",
+    "type": "autoral",
+    "shelf": "alunos",
+    "cover": "capas/acesso-a-justica-criminal.jpg",
+    "read": "",
+    "buy": "https://lumenjuris.com.br/acesso-a-justica-e-direitos-do-cosumidor/acesso-a-justica-criminal-necrims-3a-ed--2024-4281/p",
+    "video": "",
+    "lattes": [],
+    "text": "O autor analisa o acesso à justiça criminal pelos Núcleos Especiais Criminais, ligados à Polícia Civil, com o uso de ferramentas restaurativas e consensuais. Esta edição atualizada apresenta a proposta do NECRIM 3.0, voltada a alternativas para a violência doméstica e escolar."
+  },
+  {
+    "slug": "entre-direitos-e-telas",
+    "title": "Entre direitos e telas",
+    "sub": "democracia digital e os desafios da inclusão da pessoa idosa no ambiente virtual do INSS",
+    "authors": [
+      {
+        "first": "Juliana de Almeida Salvador",
+        "last": "Fiorilo"
+      }
+    ],
+    "org": false,
+    "year": "2026",
+    "city": "Londrina",
+    "pub": "Editora Thoth",
+    "pages": "150",
+    "isbn": "978-65-5113-648-1",
+    "type": "autoral",
+    "shelf": "alunos",
+    "cover": "capas/entre-direitos-e-telas.jpg",
+    "read": "",
+    "buy": "https://editorathoth.com.br/produto/entre-direitos-e-telas-democracia-digital-e-os-desafios-da-inclusao-da-pessoa-idosa-no-ambiente-virtual-do-inss/1934",
+    "video": "",
+    "lattes": [],
+    "text": "A autora investiga a exclusão digital da pessoa idosa no atendimento virtual do INSS. O estudo relaciona o tema ao etarismo, às desigualdades sociais e ao letramento digital."
+  },
+  {
+    "slug": "processo-estrutural-e-lei-de-improbidade-administrativa",
+    "title": "Processo estrutural e Lei de Improbidade Administrativa",
+    "sub": "a perspectiva dialógica do processo como complemento ou contraponto ao direito administrativo sancionador",
+    "authors": [
+      {
+        "first": "Ana Cristina",
+        "last": "Cremonezi"
+      }
+    ],
+    "org": false,
+    "year": "2025",
+    "city": "Londrina",
+    "pub": "Editora Thoth",
+    "pages": "182",
+    "isbn": "978-65-5113-192-9",
+    "type": "tese",
+    "shelf": "alunos",
+    "cover": "capas/processo-estrutural-e-lei-de-improbidade-administrativa.jpg",
+    "read": "",
+    "buy": "https://editorathoth.com.br/produto/processo-estrutural-e-lei-de-improbidade-administrativa-a-perspectiva-dialogica-de-processo-como-complemento-ou-contraponto-ao-direito-administrativo-sancionador/1465",
+    "video": "",
+    "lattes": [],
+    "text": "Fruto de dissertação de mestrado na UENP, o livro avalia se o processo estrutural pode complementar a resposta repressiva da Lei de Improbidade Administrativa. A análise considera as mudanças trazidas pela Lei 14.230/2021 e o direito administrativo sancionador."
+  },
+  {
+    "slug": "genocidio-indigena-no-brasil",
+    "title": "Genocídio indígena no Brasil",
+    "sub": "racismo de Estado e necropolítica em tempos pandêmicos",
+    "authors": [
+      {
+        "first": "Andrei Domingos",
+        "last": "Fonseca"
+      }
+    ],
+    "org": false,
+    "year": "2024",
+    "city": "Londrina",
+    "pub": "Editora Thoth",
+    "pages": "103",
+    "isbn": "978-65-5959-797-0",
+    "type": "autoral",
+    "shelf": "alunos",
+    "cover": "capas/genocidio-indigena-no-brasil.jpg",
+    "read": "",
+    "buy": "https://editorathoth.com.br/produto/genocidio-indigena-no-brasil-racismo-de-estado-e-necropolitica-em-tempos-pandemicos/1090",
+    "video": "",
+    "lattes": [],
+    "text": "Com base em pesquisa documental, o autor examina as ações do governo federal durante a pandemia de Covid-19 e discute a possibilidade de genocídio indígena. A análise usa os conceitos de racismo de Estado e necropolítica."
+  },
+  {
+    "slug": "critica-do-progresso-como-fundamento-do-direito",
+    "title": "Crítica do progresso como fundamento do direito",
+    "sub": "ontologia do dever-ser, regimes de historicidade e lento cancelamento do jurídico",
+    "authors": [
+      {
+        "first": "José Mauro",
+        "last": "Garboza Junior"
+      }
+    ],
+    "org": false,
+    "year": "2025",
+    "city": "Rio de Janeiro",
+    "pub": "Lumen Juris",
+    "pages": "244",
+    "isbn": "978-85-519-3629-0",
+    "type": "autoral",
+    "shelf": "alunos",
+    "cover": "capas/critica-do-progresso-como-fundamento-do-direito.jpg",
+    "read": "",
+    "buy": "https://lumenjuris.com.br/direito-e-psicanalise/critica-do-progresso-como-fundamento-do-direito-2025-4790/p",
+    "video": "",
+    "lattes": [],
+    "text": "O livro questiona a ideia de progresso como premissa do direito e a relaciona ao estado de exceção jurídico. A obra se organiza em três capítulos, dedicados ao passado, ao presente e ao futuro."
+  },
+  {
+    "slug": "provas-digitais-no-processo-do-trabalho",
+    "title": "Provas digitais no processo do trabalho",
+    "sub": "",
+    "authors": [
+      {
+        "first": "Liège",
+        "last": "Novaes"
+      }
+    ],
+    "org": false,
+    "year": "2024",
+    "city": "Rio de Janeiro",
+    "pub": "Lumen Juris",
+    "pages": "170",
+    "isbn": "978-85-519-3101-1",
+    "type": "tese",
+    "shelf": "alunos",
+    "cover": "capas/provas-digitais-no-processo-do-trabalho.jpg",
+    "read": "",
+    "buy": "https://lumenjuris.com.br/direito-material-e-processual-do-trabalho/provas-digitais-no-processo-do-trabalho-2024-4374/p",
+    "video": "",
+    "lattes": [],
+    "text": "Resultado de dissertação de mestrado na UENP, o livro trata do uso de provas digitais no processo do trabalho. A autora aborda recursos como endereço de IP, rastreio de e-mail, geolocalização, metadados e redes sociais."
   }
 ]
